@@ -2,31 +2,33 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>x4p | Social Hub</title>
+<title>x4p | Fun Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Font Awesome (Official CDN) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #020617, #000);
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden;
 }
 
+/* صندوق المحتوى */
 .container {
   text-align: center;
-  background: #020617;
+  background: rgba(2,6,23,0.7);
   padding: 30px;
   border-radius: 20px;
   width: 340px;
   box-shadow: 0 0 30px rgba(56,189,248,0.2);
+  position: relative;
+  z-index: 10;
 }
 
 .avatar {
@@ -44,80 +46,165 @@ body {
   object-fit: cover;
 }
 
-h1 {
-  margin: 15px 0 5px;
-}
+h1 {margin: 15px 0 5px;}
+p {color: #94a3b8; margin-bottom: 20px;}
 
-p {
-  color: #94a3b8;
-  margin-bottom: 20px;
-}
-
-.socials {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
+.socials {display: grid; grid-template-columns: repeat(3,1fr); gap:15px;}
 .socials a {
-  background: #020617;
+  background: rgba(2,6,23,0.7);
   border: 2px solid #1e293b;
   border-radius: 15px;
   padding: 15px 0;
   font-size: 26px;
   color: #38bdf8;
-  transition: 0.3s;
+  transition:0.3s;
+  cursor:pointer;
+}
+.socials a:hover {background:#38bdf8; color:#000; box-shadow:0 0 15px #38bdf8;}
+
+#musicButton {
+  position: fixed; bottom:15px; right:15px;
+  background:#38bdf8; border:none; color:#000;
+  padding:10px 15px; border-radius:12px; font-weight:bold;
+  cursor:pointer; box-shadow:0 0 10px #38bdf8; z-index:10;
 }
 
-.socials a:hover {
-  background: #38bdf8;
-  color: #000;
-  box-shadow: 0 0 15px #38bdf8;
+#viewCounter {
+  position: fixed; bottom:15px; left:15px;
+  font-size:18px; color:#38bdf8; display:flex; align-items:center; gap:5px; z-index:10;
+}
+
+#viewCounter i {font-size:22px;}
+
+#funMessageBox {
+  position: fixed; bottom:70px; left:50%;
+  transform:translateX(-50%);
+  color:#ffb6c1; font-size:16px; min-width:200px;
+  text-align:center; z-index:10;
+}
+
+/* ماوس قلب ماين كرافت */
+.heartCursor {
+  position: fixed;
+  width: 20px; height: 20px;
+  background: #ffb6c1;
+  clip-path: polygon(50% 0%, 61% 14%, 75% 14%, 88% 28%, 88% 43%, 75% 60%, 50% 80%, 25% 60%, 12% 43%, 12% 28%, 25% 14%, 39% 14%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* النقاط خلف الماوس */
+.particle {
+  position: fixed;
+  width: 6px; height:6px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:5;
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  0% {opacity:1; transform:translateY(0) scale(1);}
+  100% {opacity:0; transform:translateY(-20px) scale(0.5);}
+}
+
+/* الفيديو كخلفية */
+#bgVideo {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  z-index:-1;
 }
 </style>
 </head>
-
 <body>
+
+<!-- فيديو الخلفية -->
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="K.mp4" type="video/mp4">
+</video>
 
 <div class="container">
   <div class="avatar">
     <img src="https://i.pinimg.com/736x/bd/a7/c9/bda7c90d9e423a4d134dd6f593610cf8.jpg" alt="x4p">
   </div>
+
   <h1>x4p</h1>
-  <p>My Social Media</p>
+  <p>Click any icon 😎</p>
 
   <div class="socials">
-    <!-- Instagram -->
-    <a href="https://www.instagram.com/zoro78e" target="_blank">
-      <i class="fab fa-instagram"></i>
-    </a>
-
-    <!-- TikTok -->
-    <a href="https://www.tiktok.com/@x4p.u" target="_blank">
-      <i class="fab fa-tiktok"></i>
-    </a>
-
-    <!-- Snapchat -->
-    <a href="https://www.snapchat.com/add/ix4p" target="_blank">
-      <i class="fab fa-snapchat"></i>
-    </a>
-
-    <!-- Discord -->
-    <a href="https://discord.com/users/YOUR_ID_HERE" target="_blank">
-      <i class="fab fa-discord"></i>
-    </a>
-
-    <!-- X (Twitter) -->
-    <a href="https://twitter.com/YOUR_USERNAME" target="_blank">
-      <i class="fab fa-x-twitter"></i>
-    </a>
-
-    <!-- GitHub -->
-    <a href="https://github.com/YOUR_USERNAME" target="_blank">
-      <i class="fab fa-github"></i>
-    </a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-instagram"></i></a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-tiktok"></i></a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-snapchat"></i></a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-discord"></i></a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-github"></i></a>
+    <a onclick="showFunnyMessage()"><i class="fab fa-x-twitter"></i></a>
   </div>
 </div>
+
+<button id="musicButton" onclick="toggleMute()">🔊</button>
+
+<div id="viewCounter">
+  <i class="fas fa-eye"></i>
+  <span id="views">458</span>
+</div>
+
+<div id="funMessageBox">Hey, don’t harass me! 😳</div>
+
+<script>
+// الرسائل الفكاهية
+const messages = [
+"Hey, don’t harass me! 😳","Are you flirting with me?? 😏","Why you click me?? 😂","Stop it, I’m shy 😳",
+"I see you clicking 😎","What do you expect?? 😝","Haha, don’t do that! 😆","OMG you clicked me! 🤭"
+];
+
+const funBox = document.getElementById("funMessageBox");
+let firstMessageShown = true;
+let messageTimeout;
+
+function showFunnyMessage() {
+  const msg = firstMessageShown ? "Hey, don’t harass me! 😳" : messages[Math.floor(Math.random()*messages.length)];
+  firstMessageShown=false;
+  funBox.textContent=msg;
+  if(messageTimeout) clearTimeout(messageTimeout);
+  messageTimeout = setTimeout(()=>{ funBox.textContent=''; },5000);
+}
+
+// عداد المشاهدات
+const viewsSpan = document.getElementById("views");
+let views = parseInt(localStorage.getItem('views'))||458;
+views++; viewsSpan.textContent=views;
+localStorage.setItem('views',views);
+
+// ماوس قلب + نقاط خلفه
+const heart = document.createElement('div');
+heart.classList.add('heartCursor');
+document.body.appendChild(heart);
+
+document.addEventListener('mousemove', e=>{
+  heart.style.left=e.clientX-10+'px';
+  heart.style.top=e.clientY-10+'px';
+
+  // نقاط خلف الماوس
+  for(let i=0;i<3;i++){
+    const dot=document.createElement('div');
+    dot.classList.add('particle');
+    dot.style.left=e.clientX+Math.random()*10-5+'px';
+    dot.style.top=e.clientY+Math.random()*10-5+'px';
+    const colors=['#ffb6c1','#00ffff','#fff'];
+    dot.style.background=colors[Math.floor(Math.random()*colors.length)];
+    document.body.appendChild(dot);
+    setTimeout(()=>dot.remove(),1000);
+  }
+});
+
+// زر تشغيل/ايقاف الصوت
+const bgVideo = document.getElementById('bgVideo');
+function toggleMute(){
+  bgVideo.muted = !bgVideo.muted;
+}
+</script>
 
 </body>
 </html>
