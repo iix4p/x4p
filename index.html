@@ -62,11 +62,19 @@ p {color: #94a3b8; margin-bottom: 20px;}
 }
 .socials a:hover {background:#38bdf8; color:#000; box-shadow:0 0 15px #38bdf8;}
 
-#musicButton {
+#musicControl {
   position: fixed; bottom:15px; right:15px;
+  display:flex; align-items:center; gap:8px; z-index:10;
+}
+
+#musicButton {
   background:#38bdf8; border:none; color:#000;
   padding:10px 15px; border-radius:12px; font-weight:bold;
-  cursor:pointer; box-shadow:0 0 10px #38bdf8; z-index:10;
+  cursor:pointer; box-shadow:0 0 10px #38bdf8;
+}
+
+#volumeSlider {
+  width:100px;
 }
 
 #viewCounter {
@@ -79,7 +87,8 @@ p {color: #94a3b8; margin-bottom: 20px;}
 #funMessageBox {
   position: fixed; bottom:70px; left:50%;
   transform:translateX(-50%);
-  color:#ffb6c1; font-size:16px; min-width:200px;
+  color:#6a0dad; /* البنفسجي الغامق */
+  font-size:16px; min-width:200px;
   text-align:center; z-index:10;
 }
 
@@ -121,7 +130,7 @@ p {color: #94a3b8; margin-bottom: 20px;}
 <body>
 
 <!-- فيديو الخلفية -->
-<video autoplay muted loop playsinline id="bgVideo">
+<video autoplay loop playsinline id="bgVideo">
   <source src="K.mp4" type="video/mp4">
 </video>
 
@@ -143,7 +152,10 @@ p {color: #94a3b8; margin-bottom: 20px;}
   </div>
 </div>
 
-<button id="musicButton" onclick="toggleMute()">🔊</button>
+<div id="musicControl">
+  <button id="musicButton" onclick="toggleMute()">🔊</button>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+</div>
 
 <div id="viewCounter">
   <i class="fas fa-eye"></i>
@@ -186,7 +198,6 @@ document.addEventListener('mousemove', e=>{
   heart.style.left=e.clientX-10+'px';
   heart.style.top=e.clientY-10+'px';
 
-  // نقاط خلف الماوس
   for(let i=0;i<3;i++){
     const dot=document.createElement('div');
     dot.classList.add('particle');
@@ -199,11 +210,27 @@ document.addEventListener('mousemove', e=>{
   }
 });
 
-// زر تشغيل/ايقاف الصوت
+// الصوت والتحكم فيه
 const bgVideo = document.getElementById('bgVideo');
+bgVideo.muted = false;
+bgVideo.volume = 1;
+
 function toggleMute(){
   bgVideo.muted = !bgVideo.muted;
 }
+
+// شريط الصوت
+const volumeSlider = document.getElementById('volumeSlider');
+volumeSlider.addEventListener('input', e=>{
+  bgVideo.volume = e.target.value;
+});
+
+// بدء الفيديو من الثانية 17 بعد تحميله
+bgVideo.addEventListener('loadedmetadata', ()=>{
+  if(bgVideo.duration > 17){
+    bgVideo.currentTime = 17;
+  }
+});
 </script>
 
 </body>
