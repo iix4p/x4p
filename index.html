@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
 <title>x4p | Social Hub</title>
@@ -33,14 +33,15 @@ body {
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #38bdf8, #22d3ee);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-  font-weight: bold;
-  color: #000;
+  overflow: hidden;
   margin: auto;
+  border: 3px solid #38bdf8;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 h1 {
@@ -79,7 +80,9 @@ p {
 <body>
 
 <div class="container">
-  <div class="avatar">x4p</div>
+  <div class="avatar">
+    <img src="https://i.pinimg.com/736x/bd/a7/c9/bda7c90d9e423a4d134dd6f593610cf8.jpg" alt="x4p">
+  </div>
   <h1>x4p</h1>
   <p>My Social Media</p>
 
@@ -100,17 +103,17 @@ p {
     </a>
 
     <!-- Discord -->
-    <a href="https://discord.com/app" target="_blank">
+    <a href="https://discord.com/users/YOUR_ID_HERE" target="_blank">
       <i class="fab fa-discord"></i>
     </a>
 
     <!-- X (Twitter) -->
-    <a href="#" title="Add your X link later">
+    <a href="https://twitter.com/YOUR_USERNAME" target="_blank">
       <i class="fab fa-x-twitter"></i>
     </a>
 
     <!-- GitHub -->
-    <a href="#" title="Add your GitHub link later">
+    <a href="https://github.com/YOUR_USERNAME" target="_blank">
       <i class="fab fa-github"></i>
     </a>
   </div>
